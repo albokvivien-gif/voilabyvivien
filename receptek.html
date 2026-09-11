@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Receptek – Voila by Vivi</title>
+<meta name="description" content="Saját, kipróbált receptek a Voila by Vivi konyhájából.">
+<meta property="og:title" content="Receptek – Voila by Vivi">
+<meta property="og:description" content="Saját, kipróbált receptek a Voila by Vivi konyhájából.">
+<meta property="og:image" content="kepek/og.jpg">
+<meta property="og:type" content="website">
+<meta name="theme-color" content="#0A1C34">
+<link rel="icon" href="kepek/favicon.png" type="image/png">
+<link rel="apple-touch-icon" href="kepek/apple-touch-icon.png">
+<link rel="preload" href="fonts/cormorant-garamond-latin-500-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="stilus.css">
+<script src="receptek/lista.js"></script>
+</head>
+<body>
+<a class="skip" href="#tartalom">Ugrás a tartalomra</a>
+<header class="site-head">
+  <div class="wrap">
+    <a class="brand" href="index.html" aria-label="Voila by Vivi – kezdőlap">
+      <img src="kepek/monogram.webp" alt="" width="41" height="112">
+      <span><b>VOILA</b><i>by Vivi · Pâtisserie</i></span>
+    </a>
+    <nav class="nav" aria-label="Fő menü"><a href="index.html" class="home">Kezdőlap</a><a href="galeria.html">Galéria</a><a href="receptek.html" aria-current="page">Receptek</a><a href="rendeles.html">Rendelés</a></nav>
+  </div>
+</header>
+<main id="tartalom">
+
+<section class="page-head">
+  <div class="wrap">
+    <p class="eyebrow">Receptek</p>
+    <h1>A konyhámból</h1>
+    <p class="lede">Saját, kipróbált receptjeim – válassz egyet, és süssünk együtt.</p>
+  </div>
+</section>
+<section class="wrap" style="padding-bottom:80px">
+  <div class="tools" id="tools">
+    <label class="search">
+      <span class="skip">Keresés a receptek között</span>
+      <svg viewBox="0 0 24 24" fill="none" stroke-width="1.6" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg>
+      <input id="q" type="search" placeholder="Keresés…" autocomplete="off">
+    </label>
+    <div class="chips" id="chips" role="group" aria-label="Kategória"></div>
+  </div>
+  <p class="count" id="count" aria-live="polite"></p>
+  <div class="grid" id="grid"></div>
+  <div class="empty" id="empty" hidden>
+    <img src="kepek/favicon.png" alt="">
+    <h2 id="emptyTitle">Hamarosan</h2>
+    <p id="emptyText">Az első receptek már készülnek. Addig is nézz be Instagramra!</p>
+    <a class="btn dark" id="emptyBtn" href="https://www.instagram.com/voila.by.vivi/" rel="noopener">@voila.by.vivi</a>
+  </div>
+</section>
+<script>
+(function(){
+  const all=(window.RECEPTEK||[]).filter(r=>r&&r.fajl);
+  const grid=document.getElementById('grid'),chips=document.getElementById('chips'),q=document.getElementById('q'),
+        count=document.getElementById('count'),empty=document.getElementById('empty'),tools=document.getElementById('tools');
+  const norm=s=>(s||'').toString().toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'');
+  const esc=s=>(s||'').toString().replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+  let cat='';
+  if(!all.length){tools.hidden=true;empty.hidden=false;return;}
+  const cats=[...new Set(all.map(r=>r.kategoria).filter(Boolean))].sort((a,b)=>a.localeCompare(b,'hu'));
+  if(cats.length>1){
+    chips.innerHTML=['',...cats].map(c=>`<button class="chip" type="button" data-c="${esc(c)}" aria-pressed="${c===''}">${c?esc(c):'Mind'}</button>`).join('');
+    chips.addEventListener('click',e=>{const b=e.target.closest('.chip');if(!b)return;cat=b.dataset.c;
+      chips.querySelectorAll('.chip').forEach(x=>x.setAttribute('aria-pressed',x===b));draw();});
+  }
+  function card(r){
+    const ph=r.kep?`<img src="receptek/${encodeURI(r.kep)}" alt="" loading="lazy">`:`<img class="mono" src="kepek/monogram.webp" alt="">`;
+    return `<a class="card" href="recept.html?r=${encodeURIComponent(r.fajl)}">
+      <div class="ph">${ph}</div>
+      <div class="body">${r.kategoria?`<span class="cat">${esc(r.kategoria)}</span>`:''}
+      <h3>${esc(r.cim||r.fajl.replace(/\.html$/,''))}</h3>${r.leiras?`<p>${esc(r.leiras)}</p>`:''}
+      <span class="more">Recept →</span></div></a>`;
+  }
+  function draw(){
+    const t=norm(q.value.trim());
+    const list=all.filter(r=>(!cat||r.kategoria===cat)&&(!t||norm([r.cim,r.leiras,r.kategoria].join(' ')).includes(t)));
+    grid.innerHTML=list.map(card).join('');
+    count.textContent=list.length+' recept';
+    empty.hidden=!!list.length;
+    if(!list.length){document.getElementById('emptyTitle').textContent='Nincs találat';
+      document.getElementById('emptyText').textContent='Próbálj másik keresőszót vagy kategóriát.';
+      document.getElementById('emptyBtn').hidden=true;}
+  }
+  q.addEventListener('input',draw);draw();
+})();
+</script>
+</main>
+<footer class="site-foot">
+  <div class="wrap">
+    <p class="motto">Un peu de Paris, un peu de vous.</p>
+    <nav aria-label="Lábléc">
+      <a href="galeria.html">Galéria</a>
+      <a href="receptek.html">Receptek</a>
+      <a href="rendeles.html">Rendelés</a>
+      <a href="https://www.instagram.com/voila.by.vivi/" rel="noopener">Instagram</a>
+      <a href="impresszum.html">Impresszum</a>
+      <a href="adatkezeles.html">Adatkezelés</a>
+    </nav>
+    <small>© <span data-ev>2026</span> Voila by Vivi · Little Moments, Big Memories</small>
+  </div>
+</footer>
+<script>document.querySelectorAll('[data-ev]').forEach(e=>e.textContent=new Date().getFullYear())</script>
+</body>
+</html>

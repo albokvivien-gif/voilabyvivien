@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Galéria – Voila by Vivi</title>
+<meta name="description" content="Eddigi munkáim: torták, mini desszertek és rendezvények a Voila by Vivi konyhájából.">
+<meta property="og:title" content="Galéria – Voila by Vivi">
+<meta property="og:description" content="Eddigi munkáim: torták, mini desszertek és rendezvények a Voila by Vivi konyhájából.">
+<meta property="og:image" content="kepek/og.jpg">
+<meta property="og:type" content="website">
+<meta name="theme-color" content="#0A1C34">
+<link rel="icon" href="kepek/favicon.png" type="image/png">
+<link rel="apple-touch-icon" href="kepek/apple-touch-icon.png">
+<link rel="preload" href="fonts/cormorant-garamond-latin-500-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="stilus.css">
+<script src="galeria/lista.js"></script>
+</head>
+<body>
+<a class="skip" href="#tartalom">Ugrás a tartalomra</a>
+<header class="site-head">
+  <div class="wrap">
+    <a class="brand" href="index.html" aria-label="Voila by Vivi – kezdőlap">
+      <img src="kepek/monogram.webp" alt="" width="41" height="112">
+      <span><b>VOILA</b><i>by Vivi · Pâtisserie</i></span>
+    </a>
+    <nav class="nav" aria-label="Fő menü"><a href="index.html" class="home">Kezdőlap</a><a href="galeria.html" aria-current="page">Galéria</a><a href="receptek.html">Receptek</a><a href="rendeles.html">Rendelés</a></nav>
+  </div>
+</header>
+<main id="tartalom">
+
+<section class="page-head">
+  <div class="wrap">
+    <p class="eyebrow">Galéria</p>
+    <h1>Eddigi munkáim</h1>
+    <p class="lede">Torták, mini desszertek, rendezvények – egy kis válogatás abból, ami eddig a konyhámban készült.</p>
+  </div>
+</section>
+<section class="wrap" style="padding-bottom:80px">
+  <div class="chips galchips" id="chips" role="group" aria-label="Kategória"></div>
+  <div class="gal" id="gal"></div>
+  <div class="empty" id="empty" hidden>
+    <img src="kepek/favicon.png" alt="">
+    <h2>Hamarosan</h2>
+    <p>A galéria most készül. Addig is nézz be Instagramra!</p>
+    <a class="btn dark" href="https://www.instagram.com/voila.by.vivi/" rel="noopener">@voila.by.vivi</a>
+  </div>
+  <p class="center" style="margin-top:48px"><a class="btn dark" href="rendeles.html">Ilyet szeretnék</a></p>
+</section>
+<dialog class="lb" id="lb" aria-label="Kép nagyítva">
+  <button class="lb-x" type="button" data-act="close" aria-label="Bezárás">✕</button>
+  <button class="lb-nav prev" type="button" data-act="prev" aria-label="Előző">‹</button>
+  <figure><img id="lbImg" alt=""><figcaption id="lbCap"></figcaption></figure>
+  <button class="lb-nav next" type="button" data-act="next" aria-label="Következő">›</button>
+</dialog>
+<script>
+(function(){
+  const all=(window.GALERIA||[]).filter(x=>x&&x.kep);
+  const gal=document.getElementById('gal'),chips=document.getElementById('chips'),empty=document.getElementById('empty');
+  const lb=document.getElementById('lb'),lbImg=document.getElementById('lbImg'),lbCap=document.getElementById('lbCap');
+  const esc=s=>(s||'').toString().replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+  if(!all.length){empty.hidden=false;return;}
+  let cat='',list=all,idx=0;
+  const cats=[...new Set(all.map(x=>x.kategoria).filter(Boolean))];
+  if(cats.length>1){
+    chips.innerHTML=['',...cats].map(c=>`<button class="chip" type="button" data-c="${esc(c)}" aria-pressed="${c===''}">${c?esc(c):'Mind'}</button>`).join('');
+    chips.addEventListener('click',e=>{const b=e.target.closest('.chip');if(!b)return;cat=b.dataset.c;
+      chips.querySelectorAll('.chip').forEach(x=>x.setAttribute('aria-pressed',x===b));draw();});
+  }
+  function draw(){
+    list=all.filter(x=>!cat||x.kategoria===cat);
+    gal.innerHTML=list.map((x,i)=>`<button type="button" class="tile" data-i="${i}">
+      <img src="galeria/kicsi/${encodeURI(x.kep)}" alt="${esc(x.cim||'')}" loading="lazy"${x.w?` width="${x.w}" height="${x.h}"`:''}>
+      ${x.cim?`<span class="cap">${esc(x.cim)}</span>`:''}</button>`).join('');
+  }
+  function show(i){idx=(i+list.length)%list.length;const x=list[idx];
+    lbImg.src='galeria/'+encodeURI(x.kep);lbImg.alt=x.cim||'';
+    lbCap.innerHTML=(x.cim?esc(x.cim):'')+(x.kategoria?`<span>${esc(x.kategoria)}</span>`:'');}
+  gal.addEventListener('click',e=>{const t=e.target.closest('.tile');if(!t)return;show(+t.dataset.i);lb.showModal();});
+  lb.addEventListener('click',e=>{const a=e.target.closest('[data-act]');
+    if(a){if(a.dataset.act==='close')lb.close();else show(idx+(a.dataset.act==='next'?1:-1));return;}
+    if(e.target===lb)lb.close();});
+  document.addEventListener('keydown',e=>{if(!lb.open)return;if(e.key==='ArrowRight')show(idx+1);if(e.key==='ArrowLeft')show(idx-1);});
+  let x0=null;lb.addEventListener('touchstart',e=>{x0=e.touches[0].clientX},{passive:true});
+  lb.addEventListener('touchend',e=>{if(x0===null)return;const d=e.changedTouches[0].clientX-x0;if(Math.abs(d)>50)show(idx+(d<0?1:-1));x0=null;});
+  draw();
+})();
+</script>
+</main>
+<footer class="site-foot">
+  <div class="wrap">
+    <p class="motto">Un peu de Paris, un peu de vous.</p>
+    <nav aria-label="Lábléc">
+      <a href="galeria.html">Galéria</a>
+      <a href="receptek.html">Receptek</a>
+      <a href="rendeles.html">Rendelés</a>
+      <a href="https://www.instagram.com/voila.by.vivi/" rel="noopener">Instagram</a>
+      <a href="impresszum.html">Impresszum</a>
+      <a href="adatkezeles.html">Adatkezelés</a>
+    </nav>
+    <small>© <span data-ev>2026</span> Voila by Vivi · Little Moments, Big Memories</small>
+  </div>
+</footer>
+<script>document.querySelectorAll('[data-ev]').forEach(e=>e.textContent=new Date().getFullYear())</script>
+</body>
+</html>

@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Recept – Voila by Vivi</title>
+<meta name="description" content="Recept a Voila by Vivi konyhájából.">
+<meta property="og:title" content="Recept – Voila by Vivi">
+<meta property="og:description" content="Recept a Voila by Vivi konyhájából.">
+<meta property="og:image" content="kepek/og.jpg">
+<meta property="og:type" content="website">
+<meta name="theme-color" content="#0A1C34">
+<link rel="icon" href="kepek/favicon.png" type="image/png">
+<link rel="apple-touch-icon" href="kepek/apple-touch-icon.png">
+<link rel="preload" href="fonts/cormorant-garamond-latin-500-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="stilus.css">
+<script src="receptek/lista.js"></script>
+</head>
+<body class="viewer">
+<a class="skip" href="#tartalom">Ugrás a tartalomra</a>
+<header class="site-head">
+  <div class="wrap">
+    <a class="brand" href="index.html" aria-label="Voila by Vivi – kezdőlap">
+      <img src="kepek/monogram.webp" alt="" width="41" height="112">
+      <span><b>VOILA</b><i>by Vivi · Pâtisserie</i></span>
+    </a>
+    <nav class="nav" aria-label="Fő menü"><a href="index.html" class="home">Kezdőlap</a><a href="galeria.html">Galéria</a><a href="receptek.html" aria-current="page">Receptek</a><a href="rendeles.html">Rendelés</a></nav>
+  </div>
+</header>
+<main id="tartalom">
+
+<div class="viewer-bar"><div class="wrap">
+  <a href="receptek.html">← Vissza a receptekhez</a>
+  <a id="full" href="receptek.html" target="_blank" rel="noopener"><span class="long">Megnyitás </span>teljes oldalon ↗</a>
+</div></div>
+<iframe class="viewer-frame" id="frame" title="Recept"></iframe>
+<script>
+(function(){
+  const f=new URLSearchParams(location.search).get('r')||'';
+  const r=(window.RECEPTEK||[]).find(x=>x&&x.fajl===f);
+  if(!r||!/^[^\/\\]+\.html?$/i.test(f)||f[0]==='.'){location.replace('receptek.html');return;}
+  const src='receptek/'+encodeURIComponent(f);
+  document.getElementById('frame').src=src;
+  document.getElementById('full').href=src;
+  document.title=(r.cim||f)+' – Voila by Vivi';
+  document.getElementById('frame').title=r.cim||'Recept';
+})();
+</script>
+</main>
+<footer class="site-foot" hidden>
+  <div class="wrap">
+    <p class="motto">Un peu de Paris, un peu de vous.</p>
+    <nav aria-label="Lábléc">
+      <a href="galeria.html">Galéria</a>
+      <a href="receptek.html">Receptek</a>
+      <a href="rendeles.html">Rendelés</a>
+      <a href="https://www.instagram.com/voila.by.vivi/" rel="noopener">Instagram</a>
+      <a href="impresszum.html">Impresszum</a>
+      <a href="adatkezeles.html">Adatkezelés</a>
+    </nav>
+    <small>© <span data-ev>2026</span> Voila by Vivi · Little Moments, Big Memories</small>
+  </div>
+</footer>
+<script>document.querySelectorAll('[data-ev]').forEach(e=>e.textContent=new Date().getFullYear())</script>
+</body>
+</html>
