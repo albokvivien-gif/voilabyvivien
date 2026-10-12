@@ -45,7 +45,7 @@ function render(EST, META) {
       return '<div class="course"><div class="lab">' + (c.ital ? glass : '') + esc(c.cimke) + '</div>' +
         (c.ital ? '<div class="nm">' + esc(c.ital) + '</div>' : '') +
         '<div class="dishes">' + (c.etelek || []).map(dish).join('') + '</div></div>';
-    }).join('') + '<p class="mhint">A fogásokra kattintva a recepthez jutsz.</p>';
+    }).join('') + (REC.length ? '<p class="mhint">A fogásokra kattintva a recepthez jutsz.</p>' : '');
 
   var side = '';
   if (EST.italok && EST.italok.length) {
@@ -70,7 +70,7 @@ function render(EST, META) {
         return '<li class="' + (t[3] ? 'key' : '') + '"><label class="chk"><input type="checkbox" data-k="' + k + '"' + (S.chk[k] ? ' checked' : '') + '>' +
           (t[0] ? '<span class="tm">' + esc(t[0]) + '</span>' : '') + '<span class="tx">' + esc(t[1]) + (t[2] ? '<small>' + esc(t[2]) + '</small>' : '') + '</span></label></li>';
       }).join('') + '</ul></div>';
-  }).join('');
+  }).join('') || '<p class="eempty">A teendők hamarosan érkeznek.</p>';
 
   /* ---------- Bevásárlás ---------- */
   var bev = EST.bev || [];
@@ -162,6 +162,8 @@ function render(EST, META) {
     try { localStorage.setItem(KEY + '-tab', t); } catch (e) {}
   }
   [].forEach.call(tabs, function (t) { t.onclick = function () { openTab(t.dataset.t); }; });
+  /* ha az estnek nincsenek receptjei, a Receptek fül nem látszik */
+  if (!REC.length) { var rt = document.querySelector('.etab[data-t="rec"]'); if (rt) rt.remove(); tabs = document.querySelectorAll('.etab'); }
   try { var last = localStorage.getItem(KEY + '-tab'); if (last && document.querySelector('.etab[data-t="' + last + '"]')) openTab(last); } catch (e) {}
   document.addEventListener('click', function (e) {
     var a = e.target.closest('[data-r]'); if (!a) return;

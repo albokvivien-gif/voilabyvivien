@@ -6,6 +6,6 @@ window.ESTEK = [
   { id: "burgundi-melyseg", cim: "Burgundi mélység", jelleg: "Vacsoraest", meta: "4 fő", leiras: "A csúcs este — bœuf bourguignon, mély és elegáns.", allapot: "" },
   { id: "selyem-es-buborek", cim: "Selyem és buborék", jelleg: "Vacsoraest", meta: "4 fő", leiras: "Könnyedebb elegancia — paccheri carbonara, baszk sajttorta.", allapot: "" },
   { id: "parizsi-bisztro", cim: "Párizsi bisztró", jelleg: "Vacsoraest", meta: "4 fő · vacsora 19:00", leiras: "Hagymaleves, steak chimichurrivel, selymes burgonyapüré.", allapot: "" },
-  { id: "szulinapi-borkostolo", cim: "Szülinapi borkóstoló", jelleg: "Vacsoraest", meta: "", leiras: "", tervezes: true },
+  { id: "szulinapi-borkostolo", cim: "Bubbles & Bites", jelleg: "Szülinapi borkóstoló", meta: "~9 fő · 4 bor", leiras: "Kreinbacher, Cloudy Bay, Pauillac és Deutz – falatok minden pohárhoz.", allapot: "Tervezés alatt" },
   { id: "halaadas", cim: "Hálaadás", jelleg: "Vacsoraest", meta: "", leiras: "", tervezes: true }
 ];
