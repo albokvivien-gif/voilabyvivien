@@ -198,3 +198,8 @@ details.rec[open] summary::after{content:'–'}
 .rlinkrow .rgo .ra{color:var(--e-goldink)}
 .rlinkrow .rgo:hover .rt{text-decoration:underline;text-decoration-color:var(--e-gold);text-underline-offset:4px}
 .rlinkrow .rtip{margin:0 16px 12px}
+
+/* tervezés alatt álló est: látszik, de nem nyitható meg */
+.evcard.plan{cursor:default}
+.evcard.plan:hover,.evcard.plan:focus-visible{transform:none;box-shadow:none;border-color:var(--e-line)}
+.evcard.plan .ph{filter:saturate(.6) brightness(.85)}

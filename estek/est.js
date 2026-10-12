@@ -3,7 +3,7 @@
 (function () {
   var id = new URLSearchParams(location.search).get('e') || '';
   var meta = (window.ESTEK || []).find(function (x) { return x && x.id === id; });
-  if (!meta || !/^[a-z0-9-]+$/.test(id)) { location.replace('vacsoraestek.html'); return; }
+  if (!meta || meta.tervezes || !/^[a-z0-9-]+$/.test(id)) { location.replace('vacsoraestek.html'); return; }
   var sc = document.createElement('script');
   sc.src = 'estek/' + id + '.js';
   sc.onload = function () { render(window.EST || {}, meta); };
@@ -173,7 +173,7 @@ function render(EST, META) {
   });
 
   /* ---------- További esték ---------- */
-  $('#evstrip').innerHTML = (window.ESTEK || []).map(function (e) {
+  $('#evstrip').innerHTML = (window.ESTEK || []).filter(function (e) { return !e.tervezes; }).map(function (e) {
     return '<a class="evchip" href="est.html?e=' + encodeURIComponent(e.id) + '"' + (e.id === META.id ? ' aria-current="page"' : '') + '>' + esc(e.cim) + '</a>';
   }).join('') + '<a class="evchip" href="vacsoraestek.html">Összes est →</a>';
 

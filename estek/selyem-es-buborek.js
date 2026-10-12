@@ -1,7 +1,7 @@
 // keddi-vacsora – Vivien anyaga alapján
 window.EST = {
- "kicker": "Második este",
- "titleHtml": "Keddi <em>vacsora</em>",
+ "kicker": "Vacsoraest",
+ "titleHtml": "Selyem és <em>buborék</em>",
  "sub": "Könnyedebb elegancia — paccheri carbonara, baszk sajttorta",
  "facts": [
   [

@@ -44,11 +44,9 @@
 (function(){
   const esc=s=>String(s==null?'':s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
   const BUB='<svg viewBox="0 0 400 500" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><g fill="none" stroke="#C8A76E" stroke-width="1"><circle cx="300" cy="90" r="34"/><circle cx="350" cy="190" r="14"/><circle cx="250" cy="200" r="9"/><circle cx="370" cy="70" r="6"/><circle cx="200" cy="110" r="5"/><circle cx="330" cy="290" r="20"/><circle cx="380" cy="250" r="8"/></g></svg>';
-  const L=window.ESTEK||[];
-  if(!L.length){document.getElementById('evgrid').outerHTML='<div class="eempty" style="text-align:center;padding:60px 0">Hamarosan – az első esték már készülnek.</div>';return;}
-  document.getElementById('evgrid').innerHTML=L.map(e=>`<a class="evcard" href="est.html?e=${encodeURIComponent(e.id)}">
+  document.getElementById('evgrid').innerHTML=(window.ESTEK||[]).map(e=>(e.tervezes?`<div class="evcard plan" aria-disabled="true">`:`<a class="evcard" href="est.html?e=${encodeURIComponent(e.id)}">`)+`
     <div class="ph">${e.kep?`<img src="estek/${encodeURI(e.kep)}" alt="" loading="lazy">`:BUB}<span class="k">${esc(e.jelleg)}</span><span class="t">${esc(e.cim)}</span></div>
-    <div class="b"><span class="m">${esc(e.meta)}</span><span class="d">${esc(e.leiras)}</span>${e.allapot?`<span class="st">${esc(e.allapot)}</span>`:''}</div></a>`).join('');
+    <div class="b"><span class="m">${esc(e.meta)}</span><span class="d">${esc(e.leiras)}</span>${e.tervezes?'<span class="st">Tervezés alatt</span>':(e.allapot?`<span class="st">${esc(e.allapot)}</span>`:'')}</div>`+(e.tervezes?'</div>':'</a>')).join('');
 })();
 </script>
 </main>

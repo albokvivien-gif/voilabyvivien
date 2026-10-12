@@ -1,7 +1,7 @@
 // hetfoi-vacsora – Vivien anyaga alapján
 window.EST = {
- "kicker": "Első este",
- "titleHtml": "Hétfői <em>vacsora</em>",
+ "kicker": "Vacsoraest",
+ "titleHtml": "Burgundi <em>mélység</em>",
  "sub": "A csúcs este — bœuf bourguignon, mély és elegáns",
  "facts": [
   [

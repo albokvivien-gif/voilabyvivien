@@ -1,7 +1,7 @@
 // Vivien: francia-vacsora.html
 window.EST = {
  "kicker": "Vacsoraest",
- "titleHtml": "Francia <em>vacsora</em>",
+ "titleHtml": "Párizsi <em>bisztró</em>",
  "sub": "Hagymaleves, steak chimichurrivel, selymes burgonyapüré",
  "facts": [
   [
