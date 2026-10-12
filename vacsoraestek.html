@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Vacsoraestek – Voila by Vivi</title>
+<meta name="description" content="Baráti vacsoraestek menüvel, időtervvel, bevásárlólistával és receptekkel.">
+<meta property="og:title" content="Vacsoraestek – Voila by Vivi">
+<meta property="og:description" content="Baráti vacsoraestek menüvel, időtervvel, bevásárlólistával és receptekkel.">
+<meta property="og:image" content="kepek/og.jpg">
+<meta property="og:type" content="website">
+<meta name="theme-color" content="#0A1C34">
+<link rel="icon" href="kepek/favicon.png" type="image/png">
+<link rel="apple-touch-icon" href="kepek/apple-touch-icon.png">
+<link rel="preload" href="fonts/cormorant-garamond-latin-500-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="stilus.css">
+<link rel="stylesheet" href="estek/est.css">
+<script src="estek/lista.js"></script>
+</head>
+<body>
+<a class="skip" href="#tartalom">Ugrás a tartalomra</a>
+<header class="site-head">
+  <div class="wrap">
+    <a class="brand" href="index.html" aria-label="Voila by Vivi – kezdőlap">
+      <img src="kepek/monogram.webp" alt="" width="41" height="112">
+      <span><b>VOILA</b><i>by Vivi · Pâtisserie</i></span>
+    </a>
+    <nav class="nav" aria-label="Fő menü"><a href="index.html" class="home">Kezdőlap</a><a href="galeria.html">Galéria</a><a href="receptek.html">Receptek</a><a href="vacsoraestek.html" aria-current="page">Vacsoraestek</a><a href="rendeles.html">Rendelés</a></nav>
+  </div>
+</header>
+<main id="tartalom" class="est">
+
+<section class="page-head">
+  <div class="wrap">
+    <p class="eyebrow">Vacsoraestek</p>
+    <h1>Esték a barátaimmal</h1>
+    <p class="lede">Minden estnek saját menüje, időterve, bevásárlólistája és receptjei – egy helyen.</p>
+  </div>
+</section>
+<section class="wrap" style="padding-bottom:80px">
+  <div class="evgrid" id="evgrid"></div>
+</section>
+<script>
+(function(){
+  const esc=s=>String(s==null?'':s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+  const BUB='<svg viewBox="0 0 400 500" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><g fill="none" stroke="#C8A76E" stroke-width="1"><circle cx="300" cy="90" r="34"/><circle cx="350" cy="190" r="14"/><circle cx="250" cy="200" r="9"/><circle cx="370" cy="70" r="6"/><circle cx="200" cy="110" r="5"/><circle cx="330" cy="290" r="20"/><circle cx="380" cy="250" r="8"/></g></svg>';
+  document.getElementById('evgrid').innerHTML=(window.ESTEK||[]).map(e=>`<a class="evcard" href="est.html?e=${encodeURIComponent(e.id)}">
+    <div class="ph">${e.kep?`<img src="estek/${encodeURI(e.kep)}" alt="" loading="lazy">`:BUB}<span class="k">${esc(e.jelleg)}</span><span class="t">${esc(e.cim)}</span></div>
+    <div class="b"><span class="m">${esc(e.meta)}</span><span class="d">${esc(e.leiras)}</span>${e.allapot?`<span class="st">${esc(e.allapot)}</span>`:''}</div></a>`).join('');
+})();
+</script>
+</main>
+<footer class="site-foot">
+  <div class="wrap">
+    <p class="motto">Un peu de Paris, un peu de vous.</p>
+    <nav aria-label="Lábléc">
+      <a href="galeria.html">Galéria</a>
+      <a href="receptek.html">Receptek</a>
+      <a href="vacsoraestek.html">Vacsoraestek</a>
+      <a href="rendeles.html">Rendelés</a>
+      <a href="https://www.instagram.com/voila.by.vivi/" rel="noopener">Instagram</a>
+      <a href="impresszum.html">Impresszum</a>
+      <a href="adatkezeles.html">Adatkezelés</a>
+    </nav>
+    <small>© <span data-ev>2026</span> Voila by Vivi · Little Moments, Big Memories</small>
+  </div>
+</footer>
+<script>document.querySelectorAll('[data-ev]').forEach(e=>e.textContent=new Date().getFullYear())</script>
+</body>
+</html>

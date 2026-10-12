@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Vacsoraest – Voila by Vivi</title>
+<meta name="description" content="Vacsoraest menüvel, időtervvel, bevásárlólistával és receptekkel.">
+<meta property="og:title" content="Vacsoraest – Voila by Vivi">
+<meta property="og:description" content="Vacsoraest menüvel, időtervvel, bevásárlólistával és receptekkel.">
+<meta property="og:image" content="kepek/og.jpg">
+<meta property="og:type" content="website">
+<meta name="theme-color" content="#0A1C34">
+<link rel="icon" href="kepek/favicon.png" type="image/png">
+<link rel="apple-touch-icon" href="kepek/apple-touch-icon.png">
+<link rel="preload" href="fonts/cormorant-garamond-latin-500-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="stilus.css">
+<link rel="stylesheet" href="estek/est.css">
+<script src="estek/lista.js"></script>
+<script src="receptek/lista.js"></script>
+</head>
+<body>
+<a class="skip" href="#tartalom">Ugrás a tartalomra</a>
+<header class="site-head">
+  <div class="wrap">
+    <a class="brand" href="index.html" aria-label="Voila by Vivi – kezdőlap">
+      <img src="kepek/monogram.webp" alt="" width="41" height="112">
+      <span><b>VOILA</b><i>by Vivi · Pâtisserie</i></span>
+    </a>
+    <nav class="nav" aria-label="Fő menü"><a href="index.html" class="home">Kezdőlap</a><a href="galeria.html">Galéria</a><a href="receptek.html">Receptek</a><a href="vacsoraestek.html" aria-current="page">Vacsoraestek</a><a href="rendeles.html">Rendelés</a></nav>
+  </div>
+</header>
+<main id="tartalom" class="est">
+
+<div class="ehero">
+  <svg class="bub" viewBox="0 0 1200 300" preserveAspectRatio="xMaxYMid slice" aria-hidden="true"><g fill="none" stroke="#C8A76E" stroke-width="1"><circle cx="980" cy="70" r="26"/><circle cx="1040" cy="140" r="12"/><circle cx="930" cy="170" r="8"/><circle cx="1110" cy="60" r="6"/><circle cx="860" cy="90" r="4"/><circle cx="1070" cy="230" r="18"/><circle cx="1150" cy="190" r="9"/><circle cx="820" cy="230" r="5"/></g></svg>
+  <div class="wrap">
+    <p class="kicker" id="kicker"></p>
+    <h1 id="title">&nbsp;</h1>
+    <p class="sub" id="sub"></p>
+    <ul class="facts" id="facts"></ul>
+  </div>
+</div>
+<nav class="etabs" aria-label="Az est részei"><div class="wrap" role="tablist">
+  <button class="etab" role="tab" type="button" data-t="est" aria-selected="true">Az est</button>
+  <button class="etab" role="tab" type="button" data-t="ido">Időterv<span class="n" id="nIdo"></span></button>
+  <button class="etab" role="tab" type="button" data-t="bev">Bevásárlás<span class="n" id="nBev"></span></button>
+  <button class="etab" role="tab" type="button" data-t="rec">Receptek</button>
+  <div class="etools">
+    <button class="etool" id="copyBtn" type="button">Lista másolása</button>
+    <button class="etool" type="button" onclick="window.print()">Nyomtatás</button>
+  </div>
+</div></nav>
+<div class="wrap">
+  <section class="epanel on" id="p-est"><div class="egrid2"><div class="emenu" id="menu"></div><div class="eside" id="side"></div></div></section>
+  <section class="epanel" id="p-ido">
+    <h2 class="sec">Időterv</h2><p class="secsub" id="idoSub"></p>
+    <div class="prog"><div class="bar"><i id="idoBar"></i></div><span id="idoTxt"></span></div>
+    <div id="timeline"></div>
+  </section>
+  <section class="epanel" id="p-bev">
+    <h2 class="sec">Bevásárlólista</h2>
+    <p class="secsub">Boltrészlegenként csoportosítva. A pipák ezen az eszközön megmaradnak.</p>
+    <div class="shopbar">
+      <div class="guests">Vendégek <button type="button" id="gMinus" aria-label="Kevesebb vendég">−</button><b id="gN"></b><button type="button" id="gPlus" aria-label="Több vendég">+</button></div>
+      <div class="seg" id="seg"><button type="button" class="on" data-f="all">Minden tétel</button><button type="button" data-f="todo">Csak ami hiányzik</button></div>
+      <span class="enote" style="margin:0">A mennyiségek a vendégszámmal együtt változnak.</span>
+    </div>
+    <div class="shopgrid" id="shop"></div>
+  </section>
+  <section class="epanel" id="p-rec">
+    <h2 class="sec">Receptek ehhez az esthez</h2>
+    <p class="secsub">A weboldal receptjei közvetlenül megnyithatók; a még meg nem írt receptek halványan látszanak.</p>
+    <div class="rgrid" id="recs"></div>
+  </section>
+  <div class="evstrip-wrap" style="padding:0 0 60px"><p class="eyebrow" style="margin-bottom:8px">További esték</p><div class="evstrip" id="evstrip"></div></div>
+</div>
+<div class="toast" id="toast" role="status"></div>
+<script src="estek/est.js"></script>
+</main>
+<footer class="site-foot">
+  <div class="wrap">
+    <p class="motto">Un peu de Paris, un peu de vous.</p>
+    <nav aria-label="Lábléc">
+      <a href="galeria.html">Galéria</a>
+      <a href="receptek.html">Receptek</a>
+      <a href="vacsoraestek.html">Vacsoraestek</a>
+      <a href="rendeles.html">Rendelés</a>
+      <a href="https://www.instagram.com/voila.by.vivi/" rel="noopener">Instagram</a>
+      <a href="impresszum.html">Impresszum</a>
+      <a href="adatkezeles.html">Adatkezelés</a>
+    </nav>
+    <small>© <span data-ev>2026</span> Voila by Vivi · Little Moments, Big Memories</small>
+  </div>
+</footer>
+<script>document.querySelectorAll('[data-ev]').forEach(e=>e.textContent=new Date().getFullYear())</script>
+</body>
+</html>
