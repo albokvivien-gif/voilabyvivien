@@ -36,7 +36,7 @@ function render(EST, META) {
   /* ---------- Menü ---------- */
   function dish(d) {
     if (typeof d === 'string') return '<span>' + esc(d) + '</span>';
-    var inner = esc(d.n) + (d.alt ? '<em class="dalt">halmentesen: ' + esc(d.alt) + '</em>' : '');
+    var inner = esc(d.n) + (d.alt ? '<em class="dalt">halmentesen: ' + esc(d.alt) + '</em>' : '') + (d.megj ? '<em class="dalt">' + esc(d.megj) + '</em>' : '');
     if (d.r && linkOnly(RID[d.r])) return '<span><a class="mlink" href="' + siteUrl(RID[d.r]) + '">' + inner + '</a></span>';
     return d.r && RID[d.r] ? '<span><a class="mlink" href="#r-' + d.r + '" data-r="' + d.r + '">' + inner + '</a></span>' : '<span>' + inner + '</span>';
   }
