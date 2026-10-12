@@ -226,6 +226,12 @@ form.f{background:var(--paper);border:1px solid var(--line);padding:34px}
 .dprice span{font-family:var(--sans);font-size:13px;font-weight:400;color:var(--muted)}
 .dlink{font-size:11px;letter-spacing:.2em;text-transform:uppercase;text-decoration:none;color:var(--ink);border-bottom:1px solid var(--gold);padding-bottom:2px}
 .dlink:hover{color:var(--gold-ink)}
+.boxes{margin-top:56px}
+.boxes-title{font-size:30px;margin:0}
+.bgrid{display:grid;grid-template-columns:repeat(2,1fr);gap:22px;margin-top:28px;max-width:760px;margin-inline:auto}
+@media (max-width:560px){.bgrid{grid-template-columns:1fr}}
+.bcard{display:flex;flex-direction:column;background:var(--paper);border:1px solid var(--line);border-top:2px solid var(--gold);padding:22px 22px 20px}
+.bcard h3{font-size:24px;margin-bottom:10px}
 .refnote{text-align:center;font-family:var(--serif);font-style:italic;font-size:18px;color:var(--ink-2);max-width:40em;margin:34px auto 0}
 .infoband{background:var(--mast);color:var(--ivory);padding-block:44px}
 .infoband .wrap{display:grid;grid-template-columns:repeat(3,1fr);gap:0}

@@ -49,7 +49,7 @@
         <p class="dtags">Csokis · Sós-édes · Bestseller</p>
         <h3>Brownie sós karamellával</h3>
         <p class="ddesc">Intenzív Callebaut étcsokoládés brownie, selymes tejcsokoládé ganache-sal és házi sós vajkaramellával, Maldon sópehellyel a tetején.</p>
-        <div class="dfoot"><p class="dprice">1 490 Ft <span>/ db</span></p><a class="dlink" href="#urlap" data-pick="brownie">Érdeklődöm →</a></div>
+        <div class="dfoot"><p class="dprice">3 590 Ft <span>/ 3 db-os box</span></p><a class="dlink" href="#urlap" data-pick="brownie">Érdeklődöm →</a></div>
       </div>
     </article>
     <article class="dcard" id="d-citrom">
@@ -58,7 +58,7 @@
         <p class="dtags">Citrusos · Könnyű · Gyümölcsös</p>
         <h3>Citrom tarte</h3>
         <p class="ddesc">Omlós mandulás linzer alap, friss citromkrém, légies fehércsokis vanília cremeux, szederrel díszítve.</p>
-        <div class="dfoot"><p class="dprice">1 390 Ft <span>/ db</span></p><a class="dlink" href="#urlap" data-pick="citrom">Érdeklődöm →</a></div>
+        <div class="dfoot"><p class="dprice">3 590 Ft <span>/ 3 db-os box</span></p><a class="dlink" href="#urlap" data-pick="citrom">Érdeklődöm →</a></div>
       </div>
     </article>
     <article class="dcard" id="d-muffin">
@@ -67,7 +67,7 @@
         <p class="dtags">Gyümölcsös · Romantikus · Elegáns</p>
         <h3>Muffin málnás mascarpone krémmel</h3>
         <p class="ddesc">Vajas piskóta muffin, málnás mascarpone krémmel koronázva, friss eperrel, málnával és áfonyával díszítve.</p>
-        <div class="dfoot"><p class="dprice">1 290 Ft <span>/ db</span></p><a class="dlink" href="#urlap" data-pick="muffin">Érdeklődöm →</a></div>
+        <div class="dfoot"><p class="dprice">3 590 Ft <span>/ 4 db-os box</span></p><a class="dlink" href="#urlap" data-pick="muffin">Érdeklődöm →</a></div>
       </div>
     </article>
     <article class="dcard" id="d-malnas">
@@ -76,9 +76,26 @@
         <p class="dtags">Fehércsokis · Málnás · Prémium</p>
         <h3>Málnás fehércsokoládés tarte</h3>
         <p class="ddesc">Omlós tészta alap, málnapüré, Callebaut fehércsoki réteg, selymes vanília cremeux, friss málnával és liofilizált málnaporral.</p>
-        <div class="dfoot"><p class="dprice">1 490 Ft <span>/ db</span></p><a class="dlink" href="#urlap" data-pick="malnas">Érdeklődöm →</a></div>
+        <div class="dfoot"><p class="dprice">3 590 Ft <span>/ 3 db-os box</span></p><a class="dlink" href="#urlap" data-pick="malnas">Érdeklődöm →</a></div>
       </div>
     </article>
+    </div>
+    <div class="boxes">
+      <div class="center"><p class="eyebrow">Vegyes boxok</p><h3 class="boxes-title">Kóstold végig a kollekciót</h3></div>
+      <div class="bgrid">
+        <article class="bcard">
+          <p class="dtags">Mind a négy íz</p>
+          <h3>Kis vegyes box</h3>
+          <p class="ddesc">Mindegyik desszertből 2 db – összesen 8 mini desszert.</p>
+          <div class="dfoot"><p class="dprice">8 990 Ft <span>/ box</span></p><a class="dlink" href="#urlap" data-pick="all" data-box="Kis vegyes box (8 db)">Érdeklődöm →</a></div>
+        </article>
+        <article class="bcard">
+          <p class="dtags">Mind a négy íz</p>
+          <h3>Nagy vegyes box</h3>
+          <p class="ddesc">Mindegyik desszertből 4 db – összesen 16 mini desszert.</p>
+          <div class="dfoot"><p class="dprice">17 990 Ft <span>/ box</span></p><a class="dlink" href="#urlap" data-pick="all" data-box="Nagy vegyes box (16 db)">Érdeklődöm →</a></div>
+        </article>
+      </div>
     </div>
     <p class="refnote">A képeken látható desszertek referencia jellegűek. Az ízek, díszítések és méretek egyedi igények szerint alakíthatók – minden megbeszélés kérdése!</p>
   </div>
@@ -142,7 +159,8 @@
 <script src="urlap.js"></script>
 <script>
 document.querySelectorAll('[data-pick]').forEach(a=>a.addEventListener('click',()=>{
-  const c=document.querySelector('.picks input[data-id="'+a.dataset.pick+'"]'); if(c) c.checked=true;
+  document.querySelectorAll(a.dataset.pick==='all'?'.picks input':'.picks input[data-id="'+a.dataset.pick+'"]').forEach(c=>c.checked=true);
+  const u=document.getElementById('f-uzenet'); if(u&&a.dataset.box&&!u.value.trim()) u.value='A '+a.dataset.box.replace(/^./,m=>m.toLowerCase())+' érdekelne.';
   setTimeout(()=>{const n=document.querySelector('input[name=nev]'); if(n) n.focus({preventScroll:true});},400);
 }));
 </script>
