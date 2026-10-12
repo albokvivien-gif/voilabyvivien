@@ -29,10 +29,15 @@ function render(EST, META) {
   $('#sub').textContent = EST.sub || '';
   $('#facts').innerHTML = (EST.facts || []).map(function (f) { return '<li><b>' + esc(f[0]) + '</b>' + esc(f[1]) + '</li>'; }).join('');
 
+  /* csak hivatkozó recept (a weboldalon már fent van) */
+  function linkOnly(r) { return r && r.link && !(r.hozz && r.hozz.length) && !(r.lep && r.lep.length); }
+  function siteUrl(r) { return 'recept.html?r=' + encodeURIComponent(r.link + '.html'); }
+
   /* ---------- Menü ---------- */
   function dish(d) {
     if (typeof d === 'string') return '<span>' + esc(d) + '</span>';
     var inner = esc(d.n) + (d.alt ? '<em class="dalt">halmentesen: ' + esc(d.alt) + '</em>' : '');
+    if (d.r && linkOnly(RID[d.r])) return '<span><a class="mlink" href="' + siteUrl(RID[d.r]) + '">' + inner + '</a></span>';
     return d.r && RID[d.r] ? '<span><a class="mlink" href="#r-' + d.r + '" data-r="' + d.r + '">' + inner + '</a></span>' : '<span>' + inner + '</span>';
   }
   $('#menu').innerHTML = '<div class="mt">Menü</div><div class="mh">' + esc(EST.menuCim || META.cim) + '</div>' +
@@ -47,6 +52,9 @@ function render(EST, META) {
     side += '<div class="ebox"><h3>Italajánlás</h3><ul class="drinks">' + EST.italok.map(function (i) {
       return '<li>' + (i.mihez ? '<span class="dk">' + esc(i.mihez) + '</span>' : '') + '<b>' + esc(i.ital) + '</b>' + (i.megj ? '<small>' + esc(i.megj) + '</small>' : '') + '</li>';
     }).join('') + '</ul>' + (EST.italMegj ? '<p class="enote">' + esc(EST.italMegj) + '</p>' : '') + '</div>';
+  }
+  else if (EST.italHamarosan) {
+    side += '<div class="ebox"><h3>Italajánlás</h3><p class="enote" style="margin:0">Az italajánlás hamarosan érkezik.</p></div>';
   }
   (EST.tudnivalok || []).forEach(function (b) {
     side += '<div class="ebox"><h3>' + esc(b.cim) + '</h3><ul>' + b.tetelek.map(function (t) { return '<li>' + esc(t) + '</li>'; }).join('') + '</ul>' + (b.megj ? '<p class="enote">' + esc(b.megj) + '</p>' : '') + '</div>';
@@ -111,16 +119,34 @@ function render(EST, META) {
   };
 
   /* ---------- Receptek ---------- */
+  /* lépések; a „§”-kel kezdődő sor alcím, utána új számozás */
+  function steps(lep) {
+    var out = '', open = false;
+    (lep || []).forEach(function (l) {
+      if (l.charAt(0) === '§') { if (open) { out += '</ol>'; open = false; } out += '<h5 class="rsec">' + esc(l.slice(1)) + '</h5>'; }
+      else { if (!open) { out += '<ol class="rsteps">'; open = true; } out += '<li>' + l + '</li>'; }
+    });
+    return out + (open ? '</ol>' : '');
+  }
   var groups = [];
+  /* a csoportok sorrendje a menüt követi */
+  var ord = {}, n = 0;
+  (EST.fogasok || []).forEach(function (c) { (c.etelek || []).forEach(function (d) { if (d && d.r && !(d.r in ord)) ord[d.r] = n++; }); });
   REC.forEach(function (r) { var g = groups.find(function (x) { return x.f === r.fogas; }); if (!g) groups.push(g = { f: r.fogas, l: [] }); g.l.push(r); });
+  groups.forEach(function (g) { g.o = Math.min.apply(null, g.l.map(function (r) { return r.id in ord ? ord[r.id] : 999; })); });
+  groups.sort(function (a, b) { return a.o - b.o; });
   $('#recs').innerHTML = groups.map(function (g) {
     return '<div class="rgroup"><h3 class="rgh">' + esc(g.f) + '</h3>' + g.l.map(function (r) {
+      if (linkOnly(r)) {
+        var st = SITE.find(function (x) { return x.fajl === r.link + '.html'; });
+        return '<div class="rec rlinkrow" id="r-' + r.id + '"><a class="rgo" href="' + siteUrl(r) + '">' + (st && st.kep ? '<img src="receptek/' + encodeURI(st.kep) + '" alt="" loading="lazy">' : '') + '<span class="rt">' + esc(r.cim) + '</span><span class="ra">recept megnyitása →</span></a>' + (r.tipp ? '<p class="rtip">' + r.tipp + '</p>' : '') + '</div>';
+      }
       var site = r.link && SITE.find(function (x) { return x.fajl === r.link + '.html'; });
       var body = '';
       if (r.alap) body += '<p class="ralap">Alap: ' + r.alap.map(function (a) { return RID[a] ? '<a href="#r-' + a + '" data-r="' + a + '">' + esc(RID[a].cim) + '</a>' : esc(a); }).join(', ') + '</p>';
       if (r.hozz && r.hozz.length) body += '<div class="rcols"><div><h4>Hozzávalók</h4><ul class="ring">' + r.hozz.map(function (h) {
         return Array.isArray(h) ? '<li>' + (h[0] ? '<b>' + esc(h[0]) + '</b> ' : '') + esc(h[1]) + (h[2] ? ' <i>(' + esc(h[2]) + ')</i>' : '') + '</li>' : '<li class="rsub">' + esc(h) + '</li>';
-      }).join('') + '</ul></div><div><h4>Elkészítés</h4><ol class="rsteps">' + (r.lep || []).map(function (l) { return '<li>' + l + '</li>'; }).join('') + '</ol></div></div>';
+      }).join('') + '</ul></div><div><h4>Elkészítés</h4>' + steps(r.lep) + '</div></div>';
       if (!(r.hozz && r.hozz.length) && !(r.lep && r.lep.length) && !r.link) body += '<p class="eempty" style="padding:4px 0 0;font-size:18px">A recept hamarosan érkezik.</p>';
       if (r.tipp) body += '<p class="rtip">' + r.tipp + '</p>';
       if (site) body += '<a class="rsite" href="recept.html?r=' + encodeURIComponent(site.fajl) + '">' + (site.kep ? '<img src="receptek/' + encodeURI(site.kep) + '" alt="" loading="lazy">' : '') + '<span><small>A teljes recept a weboldalon</small>' + esc(site.cim) + ' →</span></a>';

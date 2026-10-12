@@ -185,3 +185,16 @@ details.rec[open] summary::after{content:'–'}
 .rsite span{font-family:var(--serif);font-size:18px;font-weight:600}
 .rsite small{display:block;font-family:var(--sans);font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--e-goldink);font-weight:400}
 @media print{details.rec{break-inside:avoid}details.rec .rbody{display:block}}
+
+/* alcím a lépések között */
+.rsec{font-family:var(--sans);font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--e-goldink);font-weight:500;margin:12px 0 4px}
+.rsec:first-child{margin-top:0}
+/* a weboldalon már fent lévő recept: egy kattintással megnyílik */
+.rlinkrow{background:var(--e-paper);border:1px solid var(--e-line);border-radius:16px;margin-bottom:10px;transition:border-color .2s}
+.rlinkrow:hover{border-color:var(--e-gold)}
+.rlinkrow .rgo{display:flex;align-items:center;gap:14px;text-decoration:none;color:inherit;padding:12px 16px}
+.rlinkrow .rgo img{width:44px;height:55px;object-fit:cover;border-radius:8px}
+.rlinkrow .rgo .rt{flex:1}
+.rlinkrow .rgo .ra{color:var(--e-goldink)}
+.rlinkrow .rgo:hover .rt{text-decoration:underline;text-decoration-color:var(--e-gold);text-underline-offset:4px}
+.rlinkrow .rtip{margin:0 16px 12px}
