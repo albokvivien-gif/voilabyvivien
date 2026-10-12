@@ -45,7 +45,7 @@ function render(EST, META) {
   var side = '';
   if (EST.italok && EST.italok.length) {
     side += '<div class="ebox"><h3>Italajánlás</h3><ul class="drinks">' + EST.italok.map(function (i) {
-      return '<li><span class="dk">' + esc(i.mihez) + '</span><b>' + esc(i.ital) + '</b>' + (i.megj ? '<small>' + esc(i.megj) + '</small>' : '') + '</li>';
+      return '<li>' + (i.mihez ? '<span class="dk">' + esc(i.mihez) + '</span>' : '') + '<b>' + esc(i.ital) + '</b>' + (i.megj ? '<small>' + esc(i.megj) + '</small>' : '') + '</li>';
     }).join('') + '</ul>' + (EST.italMegj ? '<p class="enote">' + esc(EST.italMegj) + '</p>' : '') + '</div>';
   }
   (EST.tudnivalok || []).forEach(function (b) {
@@ -85,6 +85,7 @@ function render(EST, META) {
     }).join('');
   }
   drawShop();
+  if (!bev.some(function (g) { return g.tetelek.some(function (t) { return t[1]; }); })) { $('.guests').style.display = 'none'; [].forEach.call(document.querySelectorAll('.shopbar .enote'), function (n) { n.style.display = 'none'; }); }
 
   function counts() {
     var a = document.querySelectorAll('#timeline input'), b = document.querySelectorAll('#shop input');
@@ -120,9 +121,10 @@ function render(EST, META) {
       if (r.hozz && r.hozz.length) body += '<div class="rcols"><div><h4>Hozzávalók</h4><ul class="ring">' + r.hozz.map(function (h) {
         return Array.isArray(h) ? '<li>' + (h[0] ? '<b>' + esc(h[0]) + '</b> ' : '') + esc(h[1]) + (h[2] ? ' <i>(' + esc(h[2]) + ')</i>' : '') + '</li>' : '<li class="rsub">' + esc(h) + '</li>';
       }).join('') + '</ul></div><div><h4>Elkészítés</h4><ol class="rsteps">' + (r.lep || []).map(function (l) { return '<li>' + l + '</li>'; }).join('') + '</ol></div></div>';
+      if (!(r.hozz && r.hozz.length) && !(r.lep && r.lep.length) && !r.link) body += '<p class="eempty" style="padding:4px 0 0;font-size:18px">A recept hamarosan érkezik.</p>';
       if (r.tipp) body += '<p class="rtip">' + r.tipp + '</p>';
       if (site) body += '<a class="rsite" href="recept.html?r=' + encodeURIComponent(site.fajl) + '">' + (site.kep ? '<img src="receptek/' + encodeURI(site.kep) + '" alt="" loading="lazy">' : '') + '<span><small>A teljes recept a weboldalon</small>' + esc(site.cim) + ' →</span></a>';
-      return '<details class="rec" id="r-' + r.id + '"><summary><span class="rt">' + esc(r.cim) + '</span>' + (r.adag ? '<span class="ra">' + esc(r.adag) + '</span>' : '') + '</summary><div class="rbody">' + body + '</div></details>';
+      return '<details class="rec" id="r-' + r.id + '"><summary><span class="rt">' + esc(r.cim) + '</span>' + (r.adag ? '<span class="ra">' + esc(r.adag) + '</span>' : (!(r.hozz && r.hozz.length) && !r.link ? '<span class="ra">hamarosan</span>' : '')) + '</summary><div class="rbody">' + body + '</div></details>';
     }).join('') + '</div>';
   }).join('');
 
