@@ -41,8 +41,8 @@
   </div>
 </div>
 <nav class="etabs" aria-label="Az est részei"><div class="wrap" role="tablist">
-  <button class="etab" role="tab" type="button" data-t="est" aria-selected="true">Az est</button>
-  <button class="etab" role="tab" type="button" data-t="ido">Időterv<span class="n" id="nIdo"></span></button>
+  <button class="etab" role="tab" type="button" data-t="est" aria-selected="true">Menü</button>
+  <button class="etab" role="tab" type="button" data-t="ido">Teendők<span class="n" id="nIdo"></span></button>
   <button class="etab" role="tab" type="button" data-t="bev">Bevásárlás<span class="n" id="nBev"></span></button>
   <button class="etab" role="tab" type="button" data-t="rec">Receptek</button>
   <div class="etools">
@@ -53,7 +53,7 @@
 <div class="wrap">
   <section class="epanel on" id="p-est"><div class="egrid2"><div class="emenu" id="menu"></div><div class="eside" id="side"></div></div></section>
   <section class="epanel" id="p-ido">
-    <h2 class="sec">Időterv</h2><p class="secsub" id="idoSub"></p>
+    <h2 class="sec">Teendők</h2><p class="secsub" id="idoSub">Két napra elosztva: amit előző nap érdemes megcsinálni, és az est napjának menetrendje.</p>
     <div class="prog"><div class="bar"><i id="idoBar"></i></div><span id="idoTxt"></span></div>
     <div id="timeline"></div>
   </section>
@@ -68,9 +68,9 @@
     <div class="shopgrid" id="shop"></div>
   </section>
   <section class="epanel" id="p-rec">
-    <h2 class="sec">Receptek ehhez az esthez</h2>
-    <p class="secsub">A weboldal receptjei közvetlenül megnyithatók; a még meg nem írt receptek halványan látszanak.</p>
-    <div class="rgrid" id="recs"></div>
+    <h2 class="sec">Receptek</h2>
+    <p class="secsub">A menü minden fogásához – fogásonként csoportosítva. Kattints egy receptre a kinyitásához.</p>
+    <div id="recs"></div>
   </section>
   <div class="evstrip-wrap" style="padding:0 0 60px"><p class="eyebrow" style="margin-bottom:8px">További esték</p><div class="evstrip" id="evstrip"></div></div>
 </div>
