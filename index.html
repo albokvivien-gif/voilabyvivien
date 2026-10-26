@@ -29,6 +29,12 @@
 <main id="tartalom">
 
 <section class="hero">
+  <div class="hero-deco" aria-hidden="true">
+    <div class="minta"><i class="alap"></i><i class="folia"></i></div>
+    <div class="ragyogas"></div>
+    <div class="keret"><b></b><b></b><b></b><b></b></div>
+    <span class="pecset fent"></span>
+  </div>
   <div class="wrap">
     <h1 class="skip">Voila by Vivi</h1>
     <img src="kepek/logo.webp" alt="Voila by Vivi – Pâtisserie française" width="555" height="571">
@@ -39,6 +45,7 @@
       <a class="btn" href="galeria.html">Galéria</a>
     </div>
   </div>
+  <div class="szalag" aria-hidden="true"><div class="sav"><span>Voila<em></em>by Vivi<em></em>Un peu de Paris, un peu de vous<em></em>Little Moments, Big Memories<em></em>Voila<em></em>by Vivi<em></em>Un peu de Paris, un peu de vous<em></em>Little Moments, Big Memories<em></em>Voila<em></em>by Vivi<em></em>Un peu de Paris, un peu de vous<em></em>Little Moments, Big Memories<em></em></span><span>Voila<em></em>by Vivi<em></em>Un peu de Paris, un peu de vous<em></em>Little Moments, Big Memories<em></em>Voila<em></em>by Vivi<em></em>Un peu de Paris, un peu de vous<em></em>Little Moments, Big Memories<em></em>Voila<em></em>by Vivi<em></em>Un peu de Paris, un peu de vous<em></em>Little Moments, Big Memories<em></em></span></div><div class="feny"></div></div>
 </section>
 
 <section class="section center">
@@ -109,5 +116,10 @@
   </div>
 </footer>
 <script>document.querySelectorAll('[data-ev]').forEach(e=>e.textContent=new Date().getFullYear())</script>
+<script>
+(function(){var h=document.querySelector('.hero');if(!h||!matchMedia('(pointer:fine)').matches||matchMedia('(prefers-reduced-motion:reduce)').matches)return;
+h.addEventListener('pointermove',function(e){var r=h.getBoundingClientRect();h.classList.add('koveti');h.style.setProperty('--mx',((e.clientX-r.left)/r.width*100).toFixed(1)+'%');h.style.setProperty('--my',((e.clientY-r.top)/r.height*100).toFixed(1)+'%');});
+h.addEventListener('pointerleave',function(){h.classList.remove('koveti');h.style.removeProperty('--mx');h.style.removeProperty('--my');});})();
+</script>
 </body>
 </html>
