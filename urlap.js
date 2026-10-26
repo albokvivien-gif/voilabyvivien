@@ -1,4 +1,4 @@
-// Voila by Vivi – érdeklődő űrlap beküldése a Supabase-be
+// Voila by Vivien – érdeklődő űrlap beküldése a Supabase-be
 (function () {
   var form = document.getElementById('urlapForm');
   if (!form) return;

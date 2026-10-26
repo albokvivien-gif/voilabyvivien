@@ -1,4 +1,4 @@
-// Voila by Vivi – a weboldal beállításai
+// Voila by Vivien – a weboldal beállításai
 // A Supabase-projekt címe és nyilvános (publishable / anon) kulcsa.
 // Ezek NEM titkosak: a böngésző ezekkel küldi be az érdeklődéseket, és a
 // Supabase jogosultságai (RLS) csak új érdeklődés beküldését engedik, olvasást nem.

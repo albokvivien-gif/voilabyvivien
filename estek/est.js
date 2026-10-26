@@ -1,4 +1,4 @@
-/* Voila by Vivi — vacsoraest megjelenítő. Az est adatai: estek/<azonosító>.js (window.EST)
+/* Voila by Vivien — vacsoraest megjelenítő. Az est adatai: estek/<azonosító>.js (window.EST)
    Egységes felépítés minden estnél: Menü (+ italajánlás) · Teendők (előző nap + az est napja) · Bevásárlás · Receptek (minden fogáshoz) */
 (function () {
   var id = new URLSearchParams(location.search).get('e') || '';
@@ -23,7 +23,7 @@ function render(EST, META) {
   REC.forEach(function (r) { RID[r.id] = r; });
   var SITE = window.RECEPTEK || [];
 
-  document.title = META.cim + ' – Vacsoraestek – Voila by Vivi';
+  document.title = META.cim + ' – Vacsoraestek – Voila by Vivien';
   $('#kicker').textContent = EST.kicker || META.jelleg || '';
   $('#title').innerHTML = EST.titleHtml || esc(META.cim);
   $('#sub').textContent = EST.sub || '';
