@@ -13,7 +13,7 @@
 <link rel="icon" href="kepek/favicon.png" type="image/png">
 <link rel="apple-touch-icon" href="kepek/apple-touch-icon.png">
 <link rel="preload" href="fonts/cormorant-garamond-latin-500-normal.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="stilus.css?v=20261026">
+<link rel="stylesheet" href="stilus.css?v=20261026c">
 <script src="receptek/lista.js"></script>
 </head>
 <body>
@@ -29,12 +29,15 @@
 </header>
 <main id="tartalom">
 
-<section class="page-head">
+<section class="page-head rh">
+  <div class="rh-minta" aria-hidden="true"></div>
   <div class="wrap">
     <p class="eyebrow">Receptek</p>
-    <h1>A konyhámból</h1>
+    <h1>A <span class="kez">konyhámból<svg class="iv" viewBox="0 0 300 24" preserveAspectRatio="none" aria-hidden="true"><path pathLength="100" d="M3 15 C 60 7, 120 3, 182 8 S 270 18, 297 9"/></svg></span></h1>
     <p class="lede">Saját, kipróbált receptjeim – válassz egyet, és süssünk együtt.</p>
   </div>
+  <nav class="parade" id="parade" aria-label="Receptek tányéron" hidden><div class="parade-sav" id="paradeSav"></div></nav>
+  <p class="rh-stat" id="rhStat"></p>
 </section>
 <section class="wrap" style="padding-bottom:80px">
   <div class="tools" id="tools">
@@ -64,6 +67,38 @@
   let cat='';
   if(!all.length){tools.hidden=true;empty.hidden=false;return;}
   const cats=[...new Set(all.map(r=>r.kategoria).filter(Boolean))].sort((a,b)=>a.localeCompare(b,'hu'));
+  (function(){
+    const sav=document.getElementById('paradeSav'),pa=document.getElementById('parade'),st=document.getElementById('rhStat');
+    const items=all.filter(r=>r.kep);
+    st.innerHTML=`<span><b>${all.length}</b> recept</span><em>◆</em><span><b>${cats.length}</b> kategória</span>`;
+    if(items.length<3)return;
+    const one=items.map((r,k)=>`<a class="plate" style="--i:${k}" href="recept.html?r=${encodeURIComponent(r.fajl)}"><i><img src="receptek/tanyer/${encodeURI(r.fajl.replace(/\.html$/,''))}.webp" alt="" loading="lazy" onerror="this.closest('.plate').remove()"></i><span>${esc(r.cim||'')}</span></a>`).join('');
+    sav.innerHTML=one+one.replace(/<a class="plate"/g,'<a class="plate" tabindex="-1" aria-hidden="true"');
+    pa.hidden=false;
+    // mozgás: lassú magától haladás + görgetésre gyorsul + húzható (egér, ujj, érintőpad)
+    const nyugi=matchMedia('(prefers-reduced-motion:reduce)').matches, alap=nyugi?0:32;
+    let pos=0,vel=0,fel=0,last=performance.now(),half=0,hover=false,huz=false,x0=0,p0=0,mozdult=false,lx=0,lt=0,lastY=scrollY;
+    const meret=()=>{half=sav.scrollWidth/2;};meret();addEventListener('resize',meret);
+    sav.querySelectorAll('img').forEach(i=>i.addEventListener('load',meret,{once:true}));
+    function lep(t){const dt=Math.min(.05,(t-last)/1000);last=t;
+      if(!huz){const cel=hover?0:alap;fel+=(cel-fel)*Math.min(1,dt*3);pos+=(fel+vel)*dt;vel*=Math.pow(.04,dt);if(Math.abs(vel)<1)vel=0;}
+      if(half>0){pos=((pos%half)+half)%half;}
+      sav.style.transform='translate3d('+(-pos).toFixed(1)+'px,0,0)';requestAnimationFrame(lep);}
+    requestAnimationFrame(lep);
+    addEventListener('scroll',()=>{const d=scrollY-lastY;lastY=scrollY;const r=pa.getBoundingClientRect();
+      if(r.bottom>0&&r.top<innerHeight)vel=Math.max(-2400,Math.min(2400,vel+d*14));},{passive:true});
+    pa.addEventListener('mouseenter',()=>{hover=true;});pa.addEventListener('mouseleave',()=>{hover=false;});
+    pa.addEventListener('wheel',e=>{if(Math.abs(e.deltaX)>Math.abs(e.deltaY)){e.preventDefault();vel=0;pos+=e.deltaX;}},{passive:false});
+    pa.addEventListener('pointerdown',e=>{if(e.button!==0)return;huz=true;mozdult=false;x0=lx=e.clientX;p0=pos;lt=performance.now();vel=0;});
+    addEventListener('pointermove',e=>{if(!huz)return;const dx=e.clientX-x0;
+      if(!mozdult&&Math.abs(dx)>6){mozdult=true;pa.classList.add('huz');try{pa.setPointerCapture(e.pointerId)}catch(_){}}
+      if(mozdult){pos=p0-dx;const t=performance.now();if(t>lt){vel=-(e.clientX-lx)/((t-lt)/1000)*.9;}lx=e.clientX;lt=t;}});
+    const enged=()=>{if(!huz)return;huz=false;pa.classList.remove('huz');if(!mozdult)vel=0;vel=Math.max(-3000,Math.min(3000,vel));};
+    addEventListener('pointerup',enged);addEventListener('pointercancel',enged);
+    pa.addEventListener('click',e=>{if(mozdult){e.preventDefault();e.stopPropagation();mozdult=false;}},true);
+    pa.addEventListener('focusin',e=>{const a=e.target.closest('.plate');if(!a)return;hover=true;const r=a.getBoundingClientRect(),pr=pa.getBoundingClientRect();pos+=r.left+r.width/2-(pr.left+pr.width/2);});
+    pa.addEventListener('focusout',()=>{hover=false;});
+  })();
   if(cats.length>1){
     chips.innerHTML=['',...cats].map(c=>`<button class="chip" type="button" data-c="${esc(c)}" aria-pressed="${c===''}">${c?esc(c):'Mind'}</button>`).join('');
     chips.addEventListener('click',e=>{const b=e.target.closest('.chip');if(!b)return;cat=b.dataset.c;

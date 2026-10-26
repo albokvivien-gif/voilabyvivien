@@ -12,7 +12,7 @@ window.RECEPTEK = [
   { fajl: "kovaszos-focaccia.html", cim: "Kovászos focaccia", leiras: "Keménykovászos, hűtőben kelesztett focaccia – levegős bélzet, ropogós szél, olívaolaj, rozmaring és koktélparadicsom.", kategoria: "Kelt tészták", kep: "kovaszos-focaccia.webp" },
   { fajl: "tiramisu-francia-bundaskenyer.html", cim: "Tiramisu francia bundáskenyér", leiras: "Vajban karamellizált briós bundáskenyér mascarpone-krémmel, kakaóval és kávés sziruppal.", kategoria: "Kelt tészták", kep: "tiramisu-francia-bundaskenyer.webp" },
   { fajl: "tiramisu-golyok.html", cim: "Tiramisu golyók", leiras: "Babapiskótás-mascarponés tiramisufalatok kakaóporban megforgatva – egyszerű, sütés nélküli desszert.", kategoria: "Desszertek", kep: "tiramisu-golyok.webp" },
-  { fajl: "baszk-sajttorta.html", cim: "Baszk sajttorta", leiras: "A San Sebastián-i legendás desszert – kívül karamellesen sült, belül selymesen krémes.", kategoria: "Torták" },
+  { fajl: "baszk-sajttorta.html", cim: "Baszk sajttorta", leiras: "A San Sebastián-i legendás desszert – kívül karamellesen sült, belül selymesen krémes.", kategoria: "Torták", kep: "baszk-sajttorta.webp" },
   { fajl: "elesztos-fank.html", cim: "Pihe-puha élesztős fánk", leiras: "Klasszikus, amerikai stílusú élesztős fánk – málnás, Oreós és Snickers változattal.", kategoria: "Kelt tészták", kep: "elesztos-fank.webp" },
   { fajl: "sajtos-rolo.html", cim: "Sajtos roló", leiras: "Ropogós leveles tészta háromféle sajttal készült, krémes töltelékkel – egy cukrász trükkel.", kategoria: "Sós finomságok", kep: "sajtos-rolo.webp" }
 ];
