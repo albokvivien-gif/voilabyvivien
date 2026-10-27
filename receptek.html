@@ -14,7 +14,7 @@
 <link rel="apple-touch-icon" href="kepek/apple-touch-icon.png">
 <link rel="preload" href="fonts/cormorant-garamond-latin-500-normal.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="stilus.css?v=20261026c">
-<script src="receptek/lista.js"></script>
+<script src="receptek/lista.js?v=20261026e"></script>
 </head>
 <body>
 <a class="skip" href="#tartalom">Ugrás a tartalomra</a>
@@ -72,7 +72,7 @@
     const items=all.filter(r=>r.kep);
     st.innerHTML=`<span><b>${all.length}</b> recept</span><em>◆</em><span><b>${cats.length}</b> kategória</span>`;
     if(items.length<3)return;
-    const one=items.map((r,k)=>`<a class="plate" style="--i:${k}" href="recept.html?r=${encodeURIComponent(r.fajl)}"><i><img src="receptek/tanyer/${encodeURI(r.fajl.replace(/\.html$/,''))}.webp" alt="" loading="lazy" onerror="this.closest('.plate').remove()"></i><span>${esc(r.cim||'')}</span></a>`).join('');
+    const one=items.map((r,k)=>`<a class="plate" style="--i:${k}" href="recept.html?r=${encodeURIComponent(r.fajl)}"><i><img src="receptek/tanyer/${encodeURI(r.fajl.replace(/\.html$/,''))}.webp?v=20261026e" alt="" loading="lazy" onerror="this.closest('.plate').remove()"></i><span>${esc(r.cim||'')}</span></a>`).join('');
     sav.innerHTML=one+one.replace(/<a class="plate"/g,'<a class="plate" tabindex="-1" aria-hidden="true"');
     pa.hidden=false;
     // mozgás: lassú magától haladás + görgetésre gyorsul + húzható (egér, ujj, érintőpad)
@@ -105,7 +105,7 @@
       chips.querySelectorAll('.chip').forEach(x=>x.setAttribute('aria-pressed',x===b));draw();});
   }
   function card(r){
-    const ph=r.kep?`<img src="receptek/${encodeURI(r.kep)}" alt="" loading="lazy">`:`<img class="mono" src="kepek/monogram.webp" alt="">`;
+    const ph=r.kep?`<img src="receptek/${encodeURI(r.kep)}?v=20261026e" alt="" loading="lazy">`:`<img class="mono" src="kepek/monogram.webp" alt="">`;
     return `<a class="card" href="recept.html?r=${encodeURIComponent(r.fajl)}">
       <div class="ph">${ph}</div>
       <div class="body">${r.kategoria?`<span class="cat">${esc(r.kategoria)}</span>`:''}
